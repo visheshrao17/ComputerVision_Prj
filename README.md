@@ -6,6 +6,7 @@ A simple, reproducible implementation of **Disci, Gurcan & Soylu (2025)** for cl
 **Institution:** Sajjan Agarwal School of Technology, Rishihood University
 
 - [Executed research notebook](notebooks/disci2025_reproduction.ipynb)
+- [Original executed Colab notebook](notebooks/disci2025_colab_executed.ipynb)
 - [M2/M3 presentation](deliverables/evaluation/Brain_MRI_M2_M3_Presentation_Final.pptx)
 - [Evaluation report PDF](deliverables/evaluation/Brain_MRI_M2_M3_Report.pdf)
 - [Editable evaluation report](deliverables/evaluation/Brain_MRI_M2_M3_Report.docx)
@@ -89,6 +90,8 @@ Smoke runs use 128 training/32 test images and one epoch, are stored separately,
 ## Notebook / free Colab
 
 Open `notebooks/disci2025_reproduction.ipynb`. It defaults to **analyzing saved results**, so tomorrow's presentation does not retrain the models. Set `RUN_TRAINING=True` only when starting new experiments. The notebook calls the same functions as the CLI.
+
+`notebooks/disci2025_colab_executed.ipynb` preserves the user-downloaded Colab notebook exactly, including training logs and saved outputs from the completed cloud experiments. Its saved settings enable training; use the research notebook above for the presentation without retraining. `deliverables/disci2025_colab_run.ipynb` is the clean starter notebook for future runs.
 
 For Colab: open `deliverables/disci2025_colab_run.ipynb` (training enabled), select **T4 GPU and runtime version 2026.07 (Python 3.12)** under Runtime > Change runtime type, and upload `deliverables/brain_mri_colab.zip` using the Files sidebar, then upload/open the notebook and run its setup cell. The bundle contains code and compact evidence, not MRI images or heavy model checkpoints; its downloader fetches the exact version 1 dataset. Changes in this local branch have not been pushed to GitHub, so cloning the old remote is insufficient.
 
