@@ -1,0 +1,17 @@
+{
+  "dataset": "masoudnickparvar/brain-tumor-mri-dataset",
+  "version": 1,
+  "download_url": "https://www.kaggle.com/api/v1/datasets/download/masoudnickparvar/brain-tumor-mri-dataset?datasetVersionNumber=1",
+  "archive_sha256": "048b7413ce05bb52627046cfa5cde097b12e865aa80f6110959f547fd6fe4ef1",
+  "image_counts": {
+    "Testing/glioma": 300,
+    "Testing/meningioma": 306,
+    "Testing/notumor": 405,
+    "Testing/pituitary": 300,
+    "Training/glioma": 1321,
+    "Training/meningioma": 1339,
+    "Training/notumor": 1595,
+    "Training/pituitary": 1457
+  },
+  "latest_version_note": "Version 2 has 7200 images and does not match the 2025 paper."
+}

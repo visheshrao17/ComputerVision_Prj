@@ -1,0 +1,19 @@
+# Paper settings. Preprocessing details/seed/trainability are disclosed assumptions.
+dataset: masoudnickparvar/brain-tumor-mri-dataset
+dataset_version: 1
+data_dir: data/raw
+output_dir: outputs/disci2025
+seed: 42
+protocol: paper_based
+class_names: [glioma, meningioma, no_tumor, pituitary]
+models: [Xception, MobileNetV2]
+image_size: 128
+batch_size: 20
+epochs: 5
+learning_rate: 0.0001
+blur_kernel: 5
+threshold: 45
+trainable_backbone: true
+input_scaling: paper
+# False is a separate lower-resource experiment, never an exact reproduction.
+validation_fraction: 0.15
