@@ -23,3 +23,12 @@ outputs/**/*
 .DS_Store
 .idea/
 .vscode/
+
+# Local caches and build ledger
+.cache/
+.superpowers/
+.pytest_cache/
+.ruff_cache/
+data/.download/
+.chart-data-*/
+.codex-finalizer/

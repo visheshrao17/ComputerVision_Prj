@@ -1,0 +1,8 @@
+{
+  "archive_name": "disci2025_results.zip",
+  "archive_sha256": "d48221659ca0f5c3fba447858a4c434c2a16b400847dcf7387227eae0f1db796",
+  "accepted_runs": 4,
+  "prediction_views": 6,
+  "local_mac_evidence": "local_mac/paper_based/MobileNetV2",
+  "source": "User-exported Colab evidence; validated histories, manifests and recomputed prediction metrics."
+}

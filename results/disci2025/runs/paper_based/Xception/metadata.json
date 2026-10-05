@@ -1,0 +1,60 @@
+{
+  "model": "Xception",
+  "protocol": "paper_based",
+  "signature": "8a2928b8dafec65fa1b7d1cb9567809262205966ae492d7f6ebcffcf764b8888",
+  "status": "complete",
+  "smoke": false,
+  "config": {
+    "dataset": "masoudnickparvar/brain-tumor-mri-dataset",
+    "dataset_version": 1,
+    "seed": 42,
+    "protocol": "paper_based",
+    "class_names": [
+      "glioma",
+      "meningioma",
+      "no_tumor",
+      "pituitary"
+    ],
+    "image_size": 128,
+    "batch_size": 20,
+    "epochs": 5,
+    "learning_rate": 0.0001,
+    "blur_kernel": 5,
+    "threshold": 45,
+    "trainable_backbone": true,
+    "input_scaling": "paper",
+    "validation_fraction": 0.15
+  },
+  "environment": {
+    "python": "3.12.13",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.35",
+    "machine": "x86_64",
+    "packages": {
+      "tensorflow": "2.18.1",
+      "keras": "3.8.0",
+      "numpy": "2.0.2",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "opencv-python-headless": "5.0.0.93"
+    },
+    "devices": [
+      "PhysicalDevice(name='/physical_device:CPU:0', device_type='CPU')",
+      "PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')"
+    ],
+    "determinism": "Fixed seeds and deterministic data order; GPU bitwise equivalence not guaranteed."
+  },
+  "counts": {
+    "train": 5712,
+    "test": 1311
+  },
+  "data_fingerprint": "6405c3881d20ffa04c6bf1050169c14897e08e91376e7131e21b603d23e42bfb",
+  "patient_independent": false,
+  "training_seconds": 346.7901658330002,
+  "total_parameters": 25056428,
+  "trainable_parameters": 25001900,
+  "batch_size": 1,
+  "n_timed_inferences": 20,
+  "median_inference_ms": 6.02607250004894,
+  "p95_inference_ms": 6.241555150063505,
+  "combined_train_test_accuracy": 0.9601309981489392
+}

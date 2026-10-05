@@ -1,0 +1,12 @@
+{
+  "proposed_change": "Replace Xception with MobileNetV2 under identical leakage-audited settings.",
+  "margin": 0.02,
+  "xception_macro_f1": 0.917584082118367,
+  "mobilenet_macro_f1": 0.7372277864275578,
+  "macro_f1_gap": 0.18035629569080913,
+  "parameter_reduction_fraction": 0.8052368837250066,
+  "shared_settings_and_data_verified": true,
+  "environment_metadata_equal": true,
+  "supported_single_seed": false,
+  "limitations": "One seed, image-level split, unresolved near-matches, duplicate test images; no statistical non-inferiority conclusion."
+}
