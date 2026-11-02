@@ -1,5 +1,9 @@
 # Final evaluation continuation
 
+Historical normalization stage. The later compact-model experiment is completed
+and verified; see [training extension](training_extension_plan.md) and the updated
+final report/PPT. The original results and hypothesis outcomes below stay unchanged.
+
 Evaluation date: 3 November 2026. This continues the merged October baseline work.
 
 ## Verified completion

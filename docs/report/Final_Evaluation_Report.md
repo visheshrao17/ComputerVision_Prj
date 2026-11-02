@@ -6,9 +6,9 @@
 
 ## Project outcome
 
-We implemented a selected Xception baseline from Disci, Gurcan and Soylu (2025), evaluated a smaller MobileNetV2 replacement, and completed a controlled normalization follow-up. Xception reached 93.67% clean test accuracy against the paper's 95.27%. The normalization follow-up improved audited MobileNetV2 accuracy from 74.29% to 81.92% and macro-F1 from 0.7372 to 0.8062. It retained 80.52% fewer total parameters than Xception but did not meet the proposed 0.02 macro-F1 gap criterion.
+We replicated the selected Xception baseline from Disci et al. (2025), then evaluated a smaller MobileNetV2 replacement. The final proposed model combines Global Average Pooling with frozen-backbone warm-up and low-rate fine-tuning while keeping BatchNorm statistics frozen. Its verified Colab test accuracy is **92.68%**, macro-F1 **0.9256**, with **2,422,468 parameters**. This is 90.33% fewer parameters than the saved audited Xception reference, which reached 91.76% accuracy and 0.9176 macro-F1.
 
-The deliverable includes executed notebooks, auditable results, exported model weights and fresh-image inference. The original and follow-up performance-preservation hypotheses remain unsupported. This is a completed experiment with a measured improvement and a negative joint hypothesis outcome, not an exact numerical replication or a clinical diagnostic system.
+The final exploratory improvement and efficiency targets are met in this single run. The original five-epoch replacement hypothesis remains unsupported; a later successful extension does not change that historical outcome. The project includes executed analysis notebooks, saved model checkpoints, ordered predictions and local inference. The comparison does not establish a new algorithm, statistically significant superiority or performance exceeding the published paper under its original protocol.
 
 ## Introduction and selected paper
 
@@ -29,7 +29,7 @@ Decoded-pixel hashing found 263 training images identical to test images, 207 re
 
 The paper-based protocol retains the official folders and evaluates clean and fixed seeded transformed test views. The audited protocol excludes exact training/test overlap and redundant training copies, then uses 4,518 training and 798 diagnostic validation images. It retains all 1,311 test images, including test duplicates. This reduces known exact leakage but does not establish patient independence.
 
-## Model and training method
+## Baseline model and training method
 
 Images are converted to grayscale, blurred, cropped using the largest foreground contour, resized to 128 by 128, copied into three channels and scaled to [0,1]. Training brightness and contrast factors are 0.8 to 1.2. The crop extracts foreground, not an annotation-validated tumor region.
 
@@ -69,31 +69,74 @@ Accuracy improved by 7.63 percentage points and macro-F1 by 0.0690 relative to t
 
 The new run took 168.6 seconds for training and measured median batch-1 inference at 5.41 milliseconds in Colab. Timing excludes downloads and final evaluation; inference uses 20 warmed-up synchronized calls. The new platform/kernel differs from the earlier Colab environment although the recorded core package versions match. Therefore we do not attribute the observed improvement solely to normalization or claim a controlled cross-run speed comparison.
 
-The final validation accuracy is 84.84%, compared with 88.72% at epoch 4. We retain epoch 5 as specified rather than changing the selection rule after observing the results. Repeated runs and validation-driven training policies are future work.
+The final validation accuracy is 84.84%, compared with 88.72% at epoch 4. We retain epoch 5 as specified rather than changing the selection rule after observing the results. This motivated the validation-guided training policy evaluated in Stage 4; repeated seeds remain future work.
+
+## Stage 4 compact model and training control
+
+The normalization experiment left a substantial generalization gap and unstable validation scores. We therefore defined two further runs before training, preserving the same audited split, crop, augmentation, seed 42, 128px input, normalization, batch 20, optimizer family and loss. Both start afresh from ImageNet weights. Test images never enter the training or checkpoint-selection callbacks.
+
+**Exploratory hypothesis H2:** Global Average Pooling with staged fine-tuning will improve macro-F1 over the normalized five-epoch MobileNetV2 while reducing total parameters. The secondary target is to come within 0.02 macro-F1 of the saved audited Xception while retaining fewer parameters.
+
+| Setting | A training control | B proposed compact model |
+| --- | --- | --- |
+| Feature aggregation | Existing Flatten | Global Average Pooling |
+| Epoch budget | Up to 20 | Five warm-up plus up to 15 fine-tuning |
+| Backbone adaptation | Fully trainable at 1e-4 | Initially frozen; then non-BatchNorm layers at 1e-5 |
+| BatchNorm statistics | Updated | Frozen throughout |
+| Checkpoint | Lowest validation loss | Lowest validation loss across both stages |
+
+Both runs stop fine-tuning after four consecutive epochs without lower validation loss. B completes its fixed five-epoch warm-up before fine-tuning; its stopping counter resets at the stage boundary. Dense(128), dropout and the four-class output remain unchanged. The global pooling head reduces parameters from 4,880,068 to 2,422,468, or 50.36% relative to the original MobileNetV2.
+
+A completed 19 epochs and selected epoch 15, with validation loss 0.2617. B completed the full 20-epoch budget and selected epoch 17, with validation loss 0.0937. The proposed model is also selected for the demo by lower validation loss, independently of test ranking. Recorded core packages, platform and device descriptions match between A, B and the normalization run; fixed seeds still do not guarantee bitwise GPU reproducibility.
+
+A tests the combined longer-budget and checkpoint-selection policy. A versus B tests a package of pooling, staged learning and BatchNorm handling. Individual component effects cannot be separated without additional ablations. These techniques are established transfer-learning practices; our contribution is their evaluated application and reproducible efficiency comparison.
+
+## Final measured comparison
+
+| Audited model | Test accuracy | Macro-F1 | Total parameters |
+| --- | ---: | ---: | ---: |
+| Historical Xception reference | 91.76% | 0.9176 | 25,056,428 |
+| Normalized MobileNetV2 five epochs | 81.92% | 0.8062 | 4,880,068 |
+| A longer-training control | 88.71% | 0.8841 | 4,880,068 |
+| B proposed compact model | **92.68%** | **0.9256** | **2,422,468** |
+
+B improves accuracy by 10.76 percentage points and macro-F1 by 0.1194 over the normalized five-epoch model, with 50.36% fewer parameters. Relative to A, B improves accuracy by 3.97 points and macro-F1 by 0.0415. Relative to saved audited Xception, B is 0.92 accuracy points and 0.0080 macro-F1 higher while using 90.33% fewer parameters. H2's observed improvement/size criterion and the secondary 0.02-margin target are therefore met. This is an exploratory observed outcome, not a statistical non-inferiority or superiority finding.
+
+| Class | A recall | B recall |
+| --- | ---: | ---: |
+| Glioma | 91.00% | 93.67% |
+| Meningioma | 84.97% | 82.35% |
+| No tumor | 96.30% | 96.05% |
+| Pituitary | 80.00% | 97.67% |
+
+Pituitary recall rises from 61.67% in the normalized five-epoch model to 97.67% in B. Improvement is not uniform: meningioma and no-tumor recall are slightly lower than A. B misclassifies 38 of 306 meningioma slices as no tumor; this remains a priority for error analysis.
+
+A took 643.1 seconds, about 10.72 minutes, and B took 382.3 seconds, about 6.37 minutes, for training including validation and checkpoint writes. Their warmed batch-1 median inference times were 5.29 and 5.19 milliseconds. These are recorded runs, not repeated controlled timing benchmarks. Historical Xception took 239.2 seconds for five epochs; B therefore does not train faster than that saved reference. Different training policies and runtime history prevent a controlled architecture-speed claim.
+
+The paper-based Xception replication remains 93.67% versus the paper's 95.27%. B uses a different audited protocol and training policy: its result must not be presented as exceeding the paper's reported accuracy.
 
 ## Model export and fresh-image inference
 
-The returned ZIP includes the trained `.keras` model, unlike the earlier compact evidence export. We loaded the checkpoint on the Mac CPU, verified the parameter count and checked four deterministic first-per-class test images against their decoded-pixel hashes. All four predicted labels match their true classes and the Colab predictions. This small implementation check is not a separate estimate of test accuracy.
+Both returned checkpoints load on the Mac CPU and have the expected parameter counts. For B, all 52 BatchNorm layers are frozen in the selected saved model. We recompute metrics and per-class results from all 1,311 Colab predictions and check four deterministic first-per-class images against their decoded-pixel hashes. Local inference results are recorded separately from full Colab metrics. B correctly predicts three of these four images; the no-tumor example is classified as meningioma, matching its Colab error. A correctly predicts two of four. All eight local class predictions agree with their corresponding Colab classes. Maximum absolute CPU/GPU score differences are approximately 0.0145 for B and 0.0538 for A. Their cause is unestablished; probability equivalence is not claimed.
 
-CPU and Colab GPU probabilities differ, with a maximum absolute difference of approximately 0.0302 across these examples. A strict 0.001 probability comparison was not satisfied. The cause is unestablished. Full 1,311-image metrics refer to the saved Colab predictions, not a separately reproduced CPU evaluation.
+The demo uses the validation-selected proposed checkpoint and the same preprocessing as training. Normalization remains inside the saved model, preventing duplicate scaling. Softmax scores are not calibrated medical probabilities. Four demonstration images are implementation checks, not an independent accuracy estimate; full CPU test accuracy is not claimed.
 
-`scripts/final_project.py` exposes `train`, `analyze` and `predict`. Prediction applies the same crop used in training, then calls the saved model in inference mode. It does not normalize inputs twice. Output consists of the predicted class and four softmax scores; these scores are not calibrated diagnostic probabilities.
-
-The complete model export can be kept locally for a demonstration without retraining. Raw MRI images and weights remain outside Git; compact evidence and the executed notebook are reviewable in the repository.
+`scripts/training_extension.py` exposes train, analyze and predict. `notebooks/training_extension_colab.ipynb` displays verified comparisons, both learning curves, confusion matrices and a saved-model prediction. Its presentation mode disables training. The complete results ZIP includes checkpoints; raw images and weights remain outside Git. The old normalization-only demo and its CPU score discrepancy remain documented in the historical evidence.
 
 ## Verification and limitations
 
-The full five-epoch run, ordered manifests and 1,311 saved test predictions pass evidence checks. Metrics were independently recomputed from probabilities. The new data fingerprint and all shared settings match the original audited MobileNetV2 after allowing only normalization to differ. The project has 36 passing tests, including normalization serialization, prediction preprocessing and comparison guards.
+Both new full-data runs pass ordered manifest, settings and prediction checks. The checkpoint-selected epochs equal the minimum validation loss in the stored histories. The archived training code and configurations match the local implementation. All summary metrics, confusion matrices and per-class values are independently recomputed from saved probabilities. The project has 44 passing tests covering baseline behavior, staged training, checkpoint selection, BatchNorm handling, evidence checks and resume behavior.
 
-Limitations remain one seed, previously evaluated test data, differing runtime environments, missing patient identifiers, unresolved near-matches and internal test duplicates. No clinical, patient-independent, tumor-localization or statistical non-inferiority conclusion follows. Differences between paper-based and audited protocols involve multiple factors and cannot isolate leakage removal.
+Limitations remain one seed, a previously examined test set, missing patient identifiers, unresolved near-matches and internal test duplicates. The global pooling and training changes are bundled rather than individually ablated. Historical Xception uses a different training budget and checkpoint policy. No patient-independent, clinical or statistical non-inferiority conclusion follows. Differences between paper-based and audited protocols also cannot isolate leakage removal.
 
-Next work should use validation-driven checkpoint rules defined before testing, controlled fine-tuning or BatchNorm experiments, repeated seeds and reliable patient-level or external validation. Further changes should preserve the current baseline and both measured hypothesis outcomes.
+The evaluation deliverable is complete with a positive exploratory efficiency outcome, an explained control experiment and preserved earlier negative results. Next work should repeat seeds, isolate component effects and validate on reliable patient-level or external data. The present result supports further investigation rather than a claim of general superiority.
 
 ## Sources and evidence
 
 - [Disci et al. paper](https://doi.org/10.3390/cancers17010121)
 - [Dataset version 1](https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset/versions/1)
 - [TensorFlow MobileNetV2 preprocessing](https://www.tensorflow.org/api_docs/python/tf/keras/applications/mobilenet_v2/preprocess_input)
-- Baseline evidence: `results/disci2025`; new evidence: `results/final_project`.
-- Import/checkpoint checksums and local inference checks: `import_verification.json` and `inference_verification.json` in the new evidence directory.
+- Baseline evidence: `results/disci2025`; normalization: `results/final_project`; final experiments: `results/training_extension`.
+- Import/checkpoint checksums and local inference checks: `import_verification.json` and `inference_verification.json` in each extension evidence directory.
+- [Keras transfer learning and BatchNorm guidance](https://keras.io/guides/transfer_learning/)
 - The original Phase 1 PDF and October evaluation report and slides are preserved.

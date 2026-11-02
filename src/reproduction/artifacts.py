@@ -38,6 +38,22 @@ def validate_saved_run(run_dir: Path, require_checkpoint: bool = False) -> bool:
             return False
         history = json.loads((run_dir / "history.json").read_text())
         epochs = metadata["config"]["epochs"]
+        if metadata["config"].get("training_policy") == "validation":
+            completed = metadata["epochs_completed"]
+            if not isinstance(completed, int) or not 1 <= completed <= epochs:
+                return False
+            if metadata["checkpoint_selection"] != "minimum_val_loss":
+                return False
+            if not all(key in history for key in ("val_loss", "val_accuracy")):
+                return False
+            if len(history["val_loss"]) != completed:
+                return False
+            selected = int(np.argmin(history["val_loss"])) + 1
+            if metadata["selected_epoch"] != selected:
+                return False
+            if not np.isclose(metadata["best_val_loss"], min(history["val_loss"]), atol=1e-8):
+                return False
+            epochs = completed
         if not all(key in history for key in ("accuracy", "loss")):
             return False
         if any(

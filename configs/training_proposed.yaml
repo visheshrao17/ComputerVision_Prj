@@ -1,0 +1,24 @@
+# B: compact head; five frozen-backbone epochs, then low-rate fine-tuning.
+dataset: masoudnickparvar/brain-tumor-mri-dataset
+dataset_version: 1
+data_dir: data/training_extension
+output_dir: outputs/training_extension/proposed
+seed: 42
+protocol: leakage_audited
+class_names: [glioma, meningioma, no_tumor, pituitary]
+models: [MobileNetV2]
+image_size: 128
+batch_size: 20
+epochs: 20
+learning_rate: 0.0001
+blur_kernel: 5
+threshold: 45
+trainable_backbone: true
+input_scaling: imagenet
+validation_fraction: 0.15
+training_policy: validation
+pooling: average
+warmup_epochs: 5
+finetune_learning_rate: 0.00001
+freeze_batchnorm: true
+patience: 4

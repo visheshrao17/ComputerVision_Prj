@@ -1,6 +1,6 @@
 # Brain Tumor MRI Classification
 
-A simple, reproducible implementation of **Disci, Gurcan & Soylu (2025)** for classifying MRI slices as glioma, meningioma, no tumor, or pituitary tumor. The notebook is the main deliverable for our capstone M2/M3 evaluation.
+A simple, reproducible implementation of **Disci, Gurcan & Soylu (2025)** for classifying MRI slices as glioma, meningioma, no tumor, or pituitary tumor. The notebooks cover baseline replication and the final capstone experiments.
 
 **Team:** Vishesh Rao, Pranay Vishwakarma, Manu Vahan
 **Institution:** Sajjan Agarwal School of Technology, Rishihood University
@@ -19,7 +19,54 @@ A simple, reproducible implementation of **Disci, Gurcan & Soylu (2025)** for cl
 
 ## Final evaluation continuation
 
-For the **3 November 2026** evaluation, continue with one controlled normalization experiment and a fresh-image prediction demo. The completed October results below stay preserved, including the original unsupported hypothesis. [Continuation plan and code explanation](docs/final_evaluation_plan.md).
+**Completed final extension (2 November):** both new Colab runs are imported and
+verified. The compact two-stage MobileNetV2 reaches **92.68% accuracy**, **0.9256
+macro-F1** and **2,422,468 parameters**. The saved audited Xception reference is
+91.76%, 0.9176 and 25,056,428 parameters. The proposed model uses **90.33% fewer
+parameters** and meets the exploratory improvement/efficiency target in this run.
+The original five-epoch hypothesis remains unsupported.
+
+| Audited experiment | Test accuracy | Macro-F1 | Parameters |
+| --- | ---: | ---: | ---: |
+| Historical Xception | 91.76% | 0.9176 | 25,056,428 |
+| Normalized MobileNetV2 five epochs | 81.92% | 0.8062 | 4,880,068 |
+| A longer-training control | 88.71% | 0.8841 | 4,880,068 |
+| B compact two-stage proposal | **92.68%** | **0.9256** | **2,422,468** |
+
+Use the [executed final notebook](notebooks/training_extension_colab.ipynb),
+[upload bundle](deliverables/brain_mri_training_source.zip),
+[measured comparison](results/training_extension/comparison.csv) and
+[experiment plan/code map](docs/training_extension_plan.md).
+
+A keeps Flatten, completes 19 epochs and selects epoch 15. B uses Global Average
+Pooling, five frozen-backbone warm-up epochs and fifteen low-rate fine-tuning
+epochs with frozen BatchNorm; it selects epoch 17. Both select the lowest
+validation-loss checkpoint. B also has lower validation loss and is used for the
+demo. Training takes about 10.72 minutes for A and 6.37 minutes for B.
+
+This is an exploratory combined-method comparison on a reused test set, not a
+new algorithm, statistical superiority or a result exceeding the published paper
+under its protocol. Xception uses a different training policy. New evidence is
+separate in `outputs/training_extension` and `results/training_extension`.
+All 1,311 prediction metrics are recomputed; saved checkpoints load on the Mac.
+B gets three of four deterministic local examples correct; the no-tumor error
+matches Colab. Softmax scores differ across platforms. See the verification JSON
+files for the full checks.
+
+For the presentation keep `RUN_TRAINING=False`; no new training is needed.
+Restore the complete model ZIP to run prediction. Raw images and checkpoints
+are excluded from Git.
+
+```bash
+python scripts/training_extension.py analyze
+python scripts/training_extension.py predict --experiment proposed --image /path/to/mri.jpg
+# Optional new runs, not needed for the demo:
+python scripts/training_extension.py train --resume
+```
+
+### Earlier normalization study
+
+Before the final training extension, we completed one controlled normalization experiment and a fresh-image prediction demo. The completed October results below stay preserved, including the original unsupported hypothesis. [Continuation plan and code explanation](docs/final_evaluation_plan.md).
 
 - [New Colab notebook](notebooks/final_project_colab.ipynb)
 - [Upload bundle for Colab](deliverables/brain_mri_final_source.zip)
@@ -39,7 +86,7 @@ The exported weights load on the Mac. Four deterministic first-per-class test ex
 
 Open the new notebook in Colab, choose **T4 GPU and runtime 2026.07 / Python 3.12**, upload the source ZIP in the Files sidebar, then run all cells. The last cell downloads `brain_mri_final_demo.zip` containing code, measured evidence **and model weights**, without raw MRI images. The notebook also demonstrates prediction on an existing test image or an uploaded image.
 
-**For tomorrow's presentation, no further training is required.** The new notebook contains executed results and a fresh-image example. Locally, `RUN_TRAINING` defaults to false. Keep the returned model ZIP: weights are stored under ignored `outputs/final_project` and are not in Git. Only four test images were restored locally for inference checks, not a full training dataset; use a fresh `--data-dir` for a new local training download.
+The normalization notebook contains executed results and a fresh-image example; it is a historical fallback; use the completed training-extension notebook for the final demo. Locally, `RUN_TRAINING` defaults to false. Keep the returned model ZIP: weights are stored under ignored `outputs/final_project` and are not in Git. Only four test images were restored locally for inference checks, not a full training dataset; the new extension uses the fresh `data/training_extension` directory.
 
 Equivalent local commands after installing the project requirements:
 
@@ -79,7 +126,7 @@ Two separate experiment protocols:
 
 **Metric correction:** The paper's headline Xception “weighted accuracy” **98.73%** is consistent with a combination of training and testing scores (inferred from its tables). Its Table 8 held-out test accuracy is **95.27%**. The implementation reports ordinary test accuracy, macro/weighted F1, balanced accuracy, recall, specificity, ROC-AUC, confusion matrices, and learning curves separately. Published and measured numbers are never conflated.
 
-## Current measured status
+## Original October results
 
 Four Colab runs are verified from finite five-epoch histories, data manifests and recomputed test predictions. The selected **Xception baseline** achieves **93.67% clean test accuracy**, macro-F1 **0.9354** (paper accuracy: 95.27%); its fixed transformed view achieves **93.29%**. This is an approximate selected-model replication, not the paper's entire six-model benchmark.
 
