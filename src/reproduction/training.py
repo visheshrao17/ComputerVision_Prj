@@ -162,7 +162,12 @@ def train_model(
         f"{config['epochs']} epochs; devices={runtime['devices']}",
         flush=True,
     )
-    metadata.update(fit_and_save(model, training, validation, config, run_dir))
+    if config.get("training_policy") == "validation":
+        from .finetuning import fit_with_validation
+
+        metadata.update(fit_with_validation(model, training, validation, config, run_dir))
+    else:
+        metadata.update(fit_and_save(model, training, validation, config, run_dir))
     del model, training, validation
     tf.keras.backend.clear_session()
     gc.collect()

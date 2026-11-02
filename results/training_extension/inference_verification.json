@@ -1,0 +1,131 @@
+{
+  "device": "Mac CPU",
+  "full_cpu_test_evaluation": false,
+  "examples_per_run": 4,
+  "runs": {
+    "control": {
+      "parameters_verified": 4880068,
+      "batchnorm_layers": 52,
+      "batchnorm_layers_frozen": 0,
+      "all_metrics_recomputed": true,
+      "examples": [
+        {
+          "path": "Testing/glioma/Te-glTr_0000.jpg",
+          "true_class": "glioma",
+          "predicted_class": "glioma",
+          "colab_predicted_class": "glioma",
+          "scores": {
+            "glioma": 0.961962103843689,
+            "meningioma": 0.0004716597613878548,
+            "no_tumor": 0.03756469860672951,
+            "pituitary": 1.528151415186585e-06
+          },
+          "max_absolute_probability_difference": 0.005647833843688943
+        },
+        {
+          "path": "Testing/meningioma/Te-meTr_0000.jpg",
+          "true_class": "meningioma",
+          "predicted_class": "meningioma",
+          "colab_predicted_class": "meningioma",
+          "scores": {
+            "glioma": 0.04971078410744667,
+            "meningioma": 0.9209097027778625,
+            "no_tumor": 0.016971305012702942,
+            "pituitary": 0.012408146634697914
+          },
+          "max_absolute_probability_difference": 0.014523867222137499
+        },
+        {
+          "path": "Testing/notumor/Te-noTr_0000.jpg",
+          "true_class": "no_tumor",
+          "predicted_class": "meningioma",
+          "colab_predicted_class": "meningioma",
+          "scores": {
+            "glioma": 0.0017455703346058726,
+            "meningioma": 0.6771306991577148,
+            "no_tumor": 0.3209691047668457,
+            "pituitary": 0.00015459283895324916
+          },
+          "max_absolute_probability_difference": 0.030841949157714876
+        },
+        {
+          "path": "Testing/pituitary/Te-piTr_0000.jpg",
+          "true_class": "pituitary",
+          "predicted_class": "meningioma",
+          "colab_predicted_class": "meningioma",
+          "scores": {
+            "glioma": 0.021872399374842644,
+            "meningioma": 0.5797812342643738,
+            "no_tumor": 0.013494706712663174,
+            "pituitary": 0.3848516643047333
+          },
+          "max_absolute_probability_difference": 0.05384153426437377
+        }
+      ],
+      "all_example_labels_match_colab": true,
+      "max_absolute_probability_difference": 0.05384153426437377
+    },
+    "proposed": {
+      "parameters_verified": 2422468,
+      "batchnorm_layers": 52,
+      "batchnorm_layers_frozen": 52,
+      "all_metrics_recomputed": true,
+      "examples": [
+        {
+          "path": "Testing/glioma/Te-glTr_0000.jpg",
+          "true_class": "glioma",
+          "predicted_class": "glioma",
+          "colab_predicted_class": "glioma",
+          "scores": {
+            "glioma": 0.9999839067459106,
+            "meningioma": 1.6007874364731833e-05,
+            "no_tumor": 5.90600315319989e-08,
+            "pituitary": 3.446347918156789e-08
+          },
+          "max_absolute_probability_difference": 2.506745910624275e-06
+        },
+        {
+          "path": "Testing/meningioma/Te-meTr_0000.jpg",
+          "true_class": "meningioma",
+          "predicted_class": "meningioma",
+          "colab_predicted_class": "meningioma",
+          "scores": {
+            "glioma": 7.149530574679375e-05,
+            "meningioma": 0.9934000968933105,
+            "no_tumor": 0.005460189655423164,
+            "pituitary": 0.0010681558633223176
+          },
+          "max_absolute_probability_difference": 0.0006233468933105613
+        },
+        {
+          "path": "Testing/notumor/Te-noTr_0000.jpg",
+          "true_class": "no_tumor",
+          "predicted_class": "meningioma",
+          "colab_predicted_class": "meningioma",
+          "scores": {
+            "glioma": 0.07372117787599564,
+            "meningioma": 0.8214869499206543,
+            "no_tumor": 0.10474882274866104,
+            "pituitary": 4.3100732000311837e-05
+          },
+          "max_absolute_probability_difference": 0.014495517251338963
+        },
+        {
+          "path": "Testing/pituitary/Te-piTr_0000.jpg",
+          "true_class": "pituitary",
+          "predicted_class": "pituitary",
+          "colab_predicted_class": "pituitary",
+          "scores": {
+            "glioma": 2.3396387049956502e-08,
+            "meningioma": 3.40211481670849e-05,
+            "no_tumor": 1.511805680642908e-09,
+            "pituitary": 0.9999659061431885
+          },
+          "max_absolute_probability_difference": 8.338568114885092e-07
+        }
+      ],
+      "all_example_labels_match_colab": true,
+      "max_absolute_probability_difference": 0.014495517251338963
+    }
+  }
+}

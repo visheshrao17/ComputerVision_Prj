@@ -42,10 +42,14 @@ def build_model(name: str, config: dict, weights: str | None = "imagenet") -> tf
     backbone = getattr(tf.keras.applications, name)(
         include_top=False, weights=weights, input_shape=shape
     )
-    backbone.trainable = config["trainable_backbone"]
+    backbone.trainable = config["trainable_backbone"] and not config.get("warmup_epochs", 0)
     # Frozen backbones use inference-mode BatchNorm; fine-tuning follows fit's training flag.
-    x = backbone(x) if backbone.trainable else backbone(x, training=False)
-    x = tf.keras.layers.Flatten(name="flatten")(x)
+    frozen_statistics = config.get("freeze_batchnorm", False)
+    x = backbone(x) if backbone.trainable and not frozen_statistics else backbone(x, training=False)
+    if config.get("pooling", "flatten") == "average":
+        x = tf.keras.layers.GlobalAveragePooling2D(name="global_average_pooling")(x)
+    else:
+        x = tf.keras.layers.Flatten(name="flatten")(x)
     x = tf.keras.layers.Dropout(0.3, name="dropout_30")(x)
     x = tf.keras.layers.Dense(128, activation="relu", name="dense_128")(x)
     x = tf.keras.layers.Dropout(0.2, name="dropout_20")(x)

@@ -1,0 +1,27 @@
+{
+  "archive_sha256": "a8d817384e379bfaac631a77ffce1190dc173bc82206bb14d029c73749859945",
+  "code_matches_local": [
+    "src/reproduction/finetuning.py",
+    "src/reproduction/models.py",
+    "src/reproduction/training.py",
+    "src/reproduction/preprocessing.py",
+    "configs/training_control.yaml",
+    "configs/training_proposed.yaml"
+  ],
+  "runs": {
+    "control": {
+      "accepted": true,
+      "checkpoint_sha256": "faad6c33580c10f38c3ae1f8cb0ecd3ed0116956202ea62a715b0a3c5f85546d",
+      "data_fingerprint": "7d26f705e2895e05fbebdcb5487f2fa011ebc27ee71d2d04a2a93598d50af571",
+      "selected_epoch": 15,
+      "epochs_completed": 19
+    },
+    "proposed": {
+      "accepted": true,
+      "checkpoint_sha256": "e673ecc4286c9905c14e6b02a80de2b85a9c42c5113d14ac36817007f7482233",
+      "data_fingerprint": "7d26f705e2895e05fbebdcb5487f2fa011ebc27ee71d2d04a2a93598d50af571",
+      "selected_epoch": 17,
+      "epochs_completed": 20
+    }
+  }
+}

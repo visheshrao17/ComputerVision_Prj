@@ -1,0 +1,84 @@
+{
+  "model": "MobileNetV2",
+  "protocol": "leakage_audited",
+  "signature": "693b0f9cf94b2bcdf3f39265d4d2fde5ca0d430e1546d8f8f631fb73b7427df0",
+  "status": "complete",
+  "smoke": false,
+  "config": {
+    "dataset": "masoudnickparvar/brain-tumor-mri-dataset",
+    "dataset_version": 1,
+    "seed": 42,
+    "protocol": "leakage_audited",
+    "class_names": [
+      "glioma",
+      "meningioma",
+      "no_tumor",
+      "pituitary"
+    ],
+    "image_size": 128,
+    "batch_size": 20,
+    "epochs": 20,
+    "learning_rate": 0.0001,
+    "blur_kernel": 5,
+    "threshold": 45,
+    "trainable_backbone": true,
+    "input_scaling": "imagenet",
+    "validation_fraction": 0.15,
+    "training_policy": "validation",
+    "pooling": "average",
+    "warmup_epochs": 5,
+    "finetune_learning_rate": 1e-05,
+    "freeze_batchnorm": true,
+    "patience": 4
+  },
+  "environment": {
+    "python": "3.12.13",
+    "platform": "Linux-6.6.159+-x86_64-with-glibc2.35",
+    "machine": "x86_64",
+    "packages": {
+      "tensorflow": "2.18.1",
+      "keras": "3.8.0",
+      "numpy": "2.0.2",
+      "pandas": "3.0.6",
+      "scikit-learn": "1.9.1",
+      "opencv-python-headless": "5.0.0.93"
+    },
+    "devices": [
+      "PhysicalDevice(name='/physical_device:CPU:0', device_type='CPU')",
+      "PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU')"
+    ],
+    "determinism": "Fixed seeds and deterministic data order; GPU bitwise equivalence not guaranteed."
+  },
+  "counts": {
+    "train": 4518,
+    "val": 798,
+    "test": 1311
+  },
+  "data_fingerprint": "7d26f705e2895e05fbebdcb5487f2fa011ebc27ee71d2d04a2a93598d50af571",
+  "patient_independent": false,
+  "training_seconds": 382.3112907169998,
+  "total_parameters": 2422468,
+  "trainable_parameters": 2354244,
+  "epochs_completed": 20,
+  "selected_epoch": 17,
+  "best_val_loss": 0.09367641061544418,
+  "checkpoint_selection": "minimum_val_loss",
+  "stages": [
+    {
+      "name": "warmup",
+      "epochs": 5,
+      "learning_rate": 0.0001,
+      "backbone_trainable": false
+    },
+    {
+      "name": "finetune",
+      "epochs": 15,
+      "learning_rate": 1e-05,
+      "backbone_trainable": true
+    }
+  ],
+  "batch_size": 1,
+  "n_timed_inferences": 20,
+  "median_inference_ms": 5.1923354999416915,
+  "p95_inference_ms": 5.411952200017822
+}

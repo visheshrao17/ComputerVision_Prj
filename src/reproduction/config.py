@@ -40,6 +40,18 @@ def validate_config(config: dict) -> None:
         raise ValueError("input_scaling must be paper or imagenet")
     if not 0 < config["validation_fraction"] < 0.5:
         raise ValueError("validation_fraction must be between zero and 0.5")
+    if config.get("pooling", "flatten") not in ("flatten", "average"):
+        raise ValueError("pooling must be flatten or average")
+    if config.get("training_policy", "final_epoch") not in ("final_epoch", "validation"):
+        raise ValueError("Unknown training_policy")
+    if config.get("training_policy") == "validation":
+        if config["protocol"] != "leakage_audited":
+            raise ValueError("Validation selection requires the audited validation split")
+        warmup = config["warmup_epochs"]
+        if not isinstance(warmup, int) or not 0 <= warmup < config["epochs"]:
+            raise ValueError("warmup_epochs must be an integer below epochs")
+        if config["patience"] < 1 or config["finetune_learning_rate"] <= 0:
+            raise ValueError("patience and finetune_learning_rate must be positive")
 
 
 def environment_metadata() -> dict:

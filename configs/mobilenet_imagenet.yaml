@@ -1,0 +1,18 @@
+# Final extension: only input_scaling differs from the audited MobileNetV2 run.
+dataset: masoudnickparvar/brain-tumor-mri-dataset
+dataset_version: 1
+data_dir: data/raw
+output_dir: outputs/final_project
+seed: 42
+protocol: leakage_audited
+class_names: [glioma, meningioma, no_tumor, pituitary]
+models: [MobileNetV2]
+image_size: 128
+batch_size: 20
+epochs: 5
+learning_rate: 0.0001
+blur_kernel: 5
+threshold: 45
+trainable_backbone: true
+input_scaling: imagenet
+validation_fraction: 0.15

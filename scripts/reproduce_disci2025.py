@@ -30,7 +30,7 @@ DATASET_URL = (
 )
 
 
-def download_dataset(destination: Path) -> dict:
+def download_dataset(destination: Path, source_path: Path | None = None) -> dict:
     destination = Path(destination)
     # Never overlay a different dataset version or delete user-provided images.
     if (destination / "Training").exists() or (destination / "Testing").exists():
@@ -62,7 +62,7 @@ def download_dataset(destination: Path) -> dict:
         "n_images": len(records),
         "note": "Version 2 has 7200 images and does not match the paper.",
     }
-    save_json(ROOT / "results/disci2025/dataset_source.json", source)
+    save_json(source_path or ROOT / "results/disci2025/dataset_source.json", source)
     archive.unlink()  # Avoid keeping a second 150 MB copy after extraction.
     return source
 

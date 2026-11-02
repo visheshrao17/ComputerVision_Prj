@@ -1,0 +1,92 @@
+{
+  "device": "Mac CPU",
+  "tensorflow": "2.18.1",
+  "checkpoint_loaded": true,
+  "same_saved_preprocessing": true,
+  "examples": [
+    {
+      "path": "Testing/glioma/Te-glTr_0000.jpg",
+      "true_class": "glioma",
+      "predicted_class": "glioma",
+      "colab_predicted_class": "glioma",
+      "scores": {
+        "glioma": 0.996669352054596,
+        "meningioma": 7.864927465561777e-05,
+        "no_tumor": 0.0032519728410989046,
+        "pituitary": 1.7459722556623092e-08
+      },
+      "colab_scores": {
+        "glioma": 0.9957343,
+        "meningioma": 9.611399e-05,
+        "no_tumor": 0.0041695344,
+        "pituitary": 2.347155e-08
+      },
+      "max_absolute_difference_from_colab": 0.0009350520545959862,
+      "pixel_hash_matches": true
+    },
+    {
+      "path": "Testing/meningioma/Te-meTr_0000.jpg",
+      "true_class": "meningioma",
+      "predicted_class": "meningioma",
+      "colab_predicted_class": "meningioma",
+      "scores": {
+        "glioma": 0.00039825084968470037,
+        "meningioma": 0.9995397329330444,
+        "no_tumor": 6.208846025401726e-05,
+        "pituitary": 4.5133731418900425e-08
+      },
+      "colab_scores": {
+        "glioma": 0.00025795365,
+        "meningioma": 0.99970055,
+        "no_tumor": 4.1429095e-05,
+        "pituitary": 2.8192474e-08
+      },
+      "max_absolute_difference_from_colab": 0.0001608170669555875,
+      "pixel_hash_matches": true
+    },
+    {
+      "path": "Testing/notumor/Te-noTr_0000.jpg",
+      "true_class": "no_tumor",
+      "predicted_class": "no_tumor",
+      "colab_predicted_class": "no_tumor",
+      "scores": {
+        "glioma": 0.40608084201812744,
+        "meningioma": 0.11086715757846832,
+        "no_tumor": 0.4830457866191864,
+        "pituitary": 6.281197329371935e-06
+      },
+      "colab_scores": {
+        "glioma": 0.3872942,
+        "meningioma": 0.099464916,
+        "no_tumor": 0.5132345,
+        "pituitary": 6.338521e-06
+      },
+      "max_absolute_difference_from_colab": 0.030188713380813637,
+      "pixel_hash_matches": true
+    },
+    {
+      "path": "Testing/pituitary/Te-piTr_0000.jpg",
+      "true_class": "pituitary",
+      "predicted_class": "pituitary",
+      "colab_predicted_class": "pituitary",
+      "scores": {
+        "glioma": 8.370382420253009e-05,
+        "meningioma": 0.00625553447753191,
+        "no_tumor": 2.4633566297893594e-08,
+        "pituitary": 0.9936607480049133
+      },
+      "colab_scores": {
+        "glioma": 6.9051246e-05,
+        "meningioma": 0.006805943,
+        "no_tumor": 2.6094579e-08,
+        "pituitary": 0.99312496
+      },
+      "max_absolute_difference_from_colab": 0.0005504085224680901,
+      "pixel_hash_matches": true
+    }
+  ],
+  "class_predictions_match_colab": true,
+  "probabilities_match_colab_at_0_001": false,
+  "max_absolute_difference_from_colab": 0.030188713380813637,
+  "note": "Four deterministic first-per-class test examples. Mac CPU probabilities differ from Colab GPU; no bitwise/probability equivalence or independently reproduced full-checkpoint accuracy is claimed. The cause is unestablished. Saved Colab probabilities remain the source of the reported 1,311-image test metrics."
+}
