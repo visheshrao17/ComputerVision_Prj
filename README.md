@@ -14,6 +14,42 @@ A simple, reproducible implementation of **Disci, Gurcan & Soylu (2025)** for cl
 - [Original literature-survey report](docs/report/Brain_Tumor_MRI_Classification_Phase1_Report.pdf)
 - [Approved implementation plan](docs/superpowers/plans/2026-10-05-disci-paper-reproduction.md)
 - [Measured results](results/disci2025/summary.csv)
+- [Final evaluation report PDF](deliverables/final_evaluation/Brain_MRI_Final_Report.pdf)
+- [Final evaluation presentation](deliverables/final_evaluation/Brain_MRI_Final_Presentation.pptx)
+
+## Final evaluation continuation
+
+For the **3 November 2026** evaluation, continue with one controlled normalization experiment and a fresh-image prediction demo. The completed October results below stay preserved, including the original unsupported hypothesis. [Continuation plan and code explanation](docs/final_evaluation_plan.md).
+
+- [New Colab notebook](notebooks/final_project_colab.ipynb)
+- [Upload bundle for Colab](deliverables/brain_mri_final_source.zip)
+- [Experiment configuration](configs/mobilenet_imagenet.yaml)
+
+The new run changes only MobileNetV2 input normalization from `[0,1]` to the documented ImageNet `[-1,1]` range. It reuses the same audited split, architecture, full fine-tuning and five epochs. The full Colab run and exported checkpoint are now verified. Reusing the previously evaluated test set limits this to an exploratory follow-up.
+
+| Audited model | Test accuracy | Macro-F1 |
+| --- | ---: | ---: |
+| Xception control | 91.76% | 0.9176 |
+| Original MobileNetV2 | 74.29% | 0.7372 |
+| Normalized MobileNetV2 | **81.92%** | **0.8062** |
+
+The observed gain is **7.63 accuracy percentage points** and **0.0690 macro-F1** over original MobileNetV2. It still uses 80.52% fewer total parameters than Xception. The remaining **0.1114** macro-F1 gap exceeds the **0.02** margin, so the joint exploratory target is **not met**. The original unsupported hypothesis remains unchanged. The recorded runtime platform/kernel differs, so the improvement is not attributed solely to normalization.
+
+The exported weights load on the Mac. Four deterministic first-per-class test examples have matching true/predicted labels and Colab classes. CPU probabilities differ by up to about 0.0302; no CPU/GPU probability equivalence or separately reproduced full CPU test accuracy is claimed. See [final report source](docs/report/Final_Evaluation_Report.md) and [inference verification](results/final_project/inference_verification.json).
+
+Open the new notebook in Colab, choose **T4 GPU and runtime 2026.07 / Python 3.12**, upload the source ZIP in the Files sidebar, then run all cells. The last cell downloads `brain_mri_final_demo.zip` containing code, measured evidence **and model weights**, without raw MRI images. The notebook also demonstrates prediction on an existing test image or an uploaded image.
+
+**For tomorrow's presentation, no further training is required.** The new notebook contains executed results and a fresh-image example. Locally, `RUN_TRAINING` defaults to false. Keep the returned model ZIP: weights are stored under ignored `outputs/final_project` and are not in Git. Only four test images were restored locally for inference checks, not a full training dataset; use a fresh `--data-dir` for a new local training download.
+
+Equivalent local commands after installing the project requirements:
+
+```bash
+python scripts/final_project.py train --resume
+python scripts/final_project.py analyze
+python scripts/final_project.py predict --image /path/to/mri.jpg
+```
+
+The new run is saved under `outputs/final_project`; its compact evidence and comparison go to `results/final_project`. Keep the downloaded model bundle before Colab disconnects. Extract that returned bundle into a separate folder on the Mac to use the same prediction command without retraining. Prediction needs `model.keras` and matching run metadata; the old compact result ZIP alone has no weights. Training preprocessing is reused, and model-specific normalization lives inside the saved model.
 
 ## Paper and correct dataset
 
@@ -93,7 +129,7 @@ Open `notebooks/disci2025_reproduction.ipynb`. It defaults to **analyzing saved 
 
 `notebooks/disci2025_colab_executed.ipynb` preserves the user-downloaded Colab notebook exactly, including training logs and saved outputs from the completed cloud experiments. Its saved settings enable training; use the research notebook above for the presentation without retraining. `deliverables/disci2025_colab_run.ipynb` is the clean starter notebook for future runs.
 
-For Colab: open `deliverables/disci2025_colab_run.ipynb` (training enabled), select **T4 GPU and runtime version 2026.07 (Python 3.12)** under Runtime > Change runtime type, and upload `deliverables/brain_mri_colab.zip` using the Files sidebar, then upload/open the notebook and run its setup cell. The bundle contains code and compact evidence, not MRI images or heavy model checkpoints; its downloader fetches the exact version 1 dataset. Changes in this local branch have not been pushed to GitHub, so cloning the old remote is insufficient.
+For the original baseline notebook: open `deliverables/disci2025_colab_run.ipynb` (training enabled), select **T4 GPU and runtime version 2026.07 (Python 3.12)** under Runtime > Change runtime type, and upload `deliverables/brain_mri_colab.zip` using the Files sidebar, then upload/open the notebook and run its setup cell. The bundle contains code and compact evidence, not MRI images or heavy model checkpoints; its downloader fetches the exact version 1 dataset. Baseline work is merged into GitHub. Use the final-evaluation notebook above for the new single-model extension.
 
 ## Bring Colab results back to the Mac
 

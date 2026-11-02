@@ -1,0 +1,24 @@
+{
+  "archive_name": "brain_mri_final_demo.zip",
+  "archive_sha256": "6c897932a0ffe56e63b01c84379003f7ec92d845643b7812bb0ac5f1a84f4a41",
+  "checkpoint_sha256": "4b8adbd2a8252ae3c5a395593ad2f8ab2a4851752c1da11ae24236018a5a7da2",
+  "import_date": "2026-11-02",
+  "new_run_validated": true,
+  "new_metric_views": 1,
+  "test_predictions": 1311,
+  "comparison": {
+    "experiment": "MobileNetV2 ImageNet normalization only",
+    "accuracy": 0.8192219679633868,
+    "macro_f1": 0.8061998029082713,
+    "original_mobile_macro_f1": 0.7372277864275578,
+    "audited_xception_macro_f1": 0.917584082118367,
+    "macro_f1_improvement": 0.0689720164807135,
+    "xception_minus_new_macro_f1": 0.11138427921009564,
+    "allowed_margin": 0.02,
+    "total_parameters": 4880068,
+    "meets_exploratory_target": false,
+    "same_data_and_other_settings": true,
+    "same_recorded_environment_as_original": false,
+    "interpretation": "Exploratory follow-up on a previously evaluated test set, one seed. The original unsupported hypothesis result remains unchanged. Hardware/library differences may affect comparisons with the earlier run."
+  }
+}

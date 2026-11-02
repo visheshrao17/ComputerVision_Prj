@@ -32,3 +32,5 @@ outputs/**/*
 data/.download/
 .chart-data-*/
 .codex-finalizer/
+# Local deployment export contains model weights; keep it out of Git.
+deliverables/brain_mri_final_demo.zip
