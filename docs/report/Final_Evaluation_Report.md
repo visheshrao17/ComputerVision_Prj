@@ -1,7 +1,7 @@
 # Brain MRI classification final evaluation
 
-**Evaluation:** 3 November 2026  
-**Team:** Vishesh Rao, Pranay Vishwakarma and Manu Vahan  
+**Evaluation:** 3 November 2026
+**Team:** Vishesh Rao, Pranay Vishwakarma and Manu Vahan
 **Institution:** Sajjan Agarwal School of Technology, Rishihood University
 
 ## Project outcome
