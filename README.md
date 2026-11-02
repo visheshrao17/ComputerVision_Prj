@@ -29,6 +29,12 @@ The four Colab/reproduction notebooks are tracked under `notebooks/`.
 Representative report images are included as figure assets; the complete raw
 dataset and model checkpoints remain outside Git.
 
+The final presentation has 16 slides and follows the previous milestone's
+format: selected baseline and original outcome, work continued, final verified
+results, prediction examples and remaining limitations. Evaluation dates and
+command-line details are omitted from the slides. The previous milestone deck
+is preserved separately under `deliverables/evaluation`.
+
 ## Final evaluation continuation
 
 **Completed final extension (2 November):** both new Colab runs are imported and
