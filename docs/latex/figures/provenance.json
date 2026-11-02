@@ -1,0 +1,16 @@
+{
+  "image_assets": {
+    "example_glioma.jpg": {
+      "dataset_path": "Testing/glioma/Te-glTr_0000.jpg",
+      "file_sha256": "b513a83f68e486f45159b004d356782e782840145321511f99dd38399251b6d7",
+      "pixel_hash": "693359a70bc0d9f9c2145aa21d6cc19b793aa47bc30a2d2d500676e2530d3b21"
+    },
+    "example_no_tumor.jpg": {
+      "dataset_path": "Testing/notumor/Te-noTr_0000.jpg",
+      "file_sha256": "3a4344d358c8faf37824a990ee88b70b6af511ac1925c3d96a831dc579d620db",
+      "pixel_hash": "b55b9ec5d3fabbee369faa0ef1f76a44dc6913540230080be4ca164f96c2b9af"
+    }
+  },
+  "quantitative_figures": "Copied unchanged from accepted proposed run",
+  "source_commit": "bfbd165"
+}

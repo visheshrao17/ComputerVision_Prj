@@ -30,6 +30,7 @@ def package_extension(destination: Path, include_models: bool = False) -> Path:
         "src/reproduction",
         "scripts",
         "configs",
+        "docs/latex",
         "results/disci2025",
         "results/final_project",
         "results/training_extension",

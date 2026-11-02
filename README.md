@@ -17,6 +17,18 @@ A simple, reproducible implementation of **Disci, Gurcan & Soylu (2025)** for cl
 - [Final evaluation report PDF](deliverables/final_evaluation/Brain_MRI_Final_Report.pdf)
 - [Final evaluation presentation](deliverables/final_evaluation/Brain_MRI_Final_Presentation.pptx)
 
+## Research report in LaTeX
+
+- [Compiled research report](deliverables/final_evaluation/Brain_MRI_Research_Report.pdf)
+- [LaTeX source and build instructions](docs/latex/README.md)
+- [Overleaf-ready source ZIP](deliverables/brain_mri_latex_report.zip)
+
+The report includes verified results, numbered tables and figures, references,
+and a correct prediction plus a retained error using traced dataset examples.
+The four Colab/reproduction notebooks are tracked under `notebooks/`.
+Representative report images are included as figure assets; the complete raw
+dataset and model checkpoints remain outside Git.
+
 ## Final evaluation continuation
 
 **Completed final extension (2 November):** both new Colab runs are imported and
